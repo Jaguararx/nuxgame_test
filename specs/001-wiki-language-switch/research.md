@@ -26,9 +26,9 @@
 
 ## Decision: English Wikipedia preferences, saved language, not `uselang`
 
-**Rationale**: The application under test is `https://en.wikipedia.org`. Interface language is the user preference under Preferences → User profile → Internationalisation (MediaWiki's English label uses the British spelling). The visible control is the language dropdown in `.mw-htmlform-field-HTMLSelectLanguageField` (`input[role="combobox"]`). The native `#mw-input-wplanguage` select stays in the form but is hidden, so a visibility check on that select fails. Option values are `uk` (shown as `uk · українська`) and `en` (shown as `en · English`). After the dropdown changes, the check presses the Save button in the sticky bar at the bottom of the preferences form (`#mw-prefs-form .mw-htmlform-submit-buttons button[type="submit"]`) and waits for the page to reload. A `uselang` query parameter would change the view without saving the preference, so it MUST NOT be used as the action under test.
+**Rationale**: The application under test is `https://en.wikipedia.org`. Local Preferences has no usable language select: `#mw-input-wplanguage` is hidden. The link inside `#mw-input-wpglobal-info` opens `Special:GlobalPreferences`. There the language dropdown stays disabled until the checkbox `#mw-input-wplanguage-global` ("Make this setting global") is checked. Option values are `uk` (shown as `uk · українська`) and `en` (shown as `en · English`). After the dropdown changes, the check presses the Save button in the sticky bar at the bottom (`#mw-prefs-form .mw-htmlform-submit-buttons button[type="submit"]`). It then opens local Preferences again and passes only when that page's heading and language match. A `uselang` query parameter would change the view without saving the preference, so it MUST NOT be used as the action under test.
 
-**Alternatives considered**: The Universal Language Selector dialog (extra UI, not the preferences select the scenario names). Another language edition of Wikipedia (out of scope).
+**Alternatives considered**: Setting the hidden local select (it is not visible, and the visible local dropdown is not the control the page uses for this account). The Universal Language Selector dialog. Another language edition of Wikipedia (out of scope).
 
 ## Decision: What proves the interface changed
 
@@ -38,7 +38,7 @@
 
 ## Decision: Sign-in before Preferences
 
-**Rationale**: Open `Special:UserLogin`, fill the username and password fields, and submit. Then open `Special:Preferences#mw-prefsection-personal`. The supplied account is assumed to accept a password with no second verification step. Wrong or empty credentials fail the test; Playwright still writes the HTML report, and the entrypoint still copies it.
+**Rationale**: Open `Special:UserLogin`, fill the username and password fields, and submit. Then open `Special:Preferences` and follow the global-preferences link. The supplied account is assumed to accept a password with no second verification step. Wrong or empty credentials fail the test; Playwright still writes the HTML report, and the entrypoint still copies it.
 
 **Alternatives considered**: A stored storage state checked into the repo (it would be a credential-like secret).
 

@@ -10,10 +10,11 @@ Automated check that an authorized Wikipedia user can change the interface langu
 
 1. Sign in to English Wikipedia.
 2. Open Preferences.
-3. Open the User profile tab.
-4. Under Internationalization, select Ukrainian if the interface is not Ukrainian. If it is already Ukrainian, select English.
-5. Save.
-6. Open the home page.
+3. Open global preferences.
+4. Check the box that enables the language dropdown, if it is not already checked.
+5. Select Ukrainian if the interface is not Ukrainian. If it is already Ukrainian, select English.
+6. Press Save at the bottom of the page.
+7. Open the home page.
 
 **Expected result:** The interface is shown in the selected language on Preferences and on the home page. The preferences heading is `Налаштування` for Ukrainian or `Preferences` for English. The home page privacy-policy link is `Політика конфіденційності` or `Privacy policy`. The page language matches that choice on both pages.
 

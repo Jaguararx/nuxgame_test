@@ -14,21 +14,22 @@
 
 - Q: Which two interface languages should the check switch between? → A: Ukrainian and English. Switch to Ukrainian unless the account is already in Ukrainian, then switch to English.
 - Q: What proves the interface language changed? → A: The preferences heading (`Налаштування` or `Preferences`) and the page language. The language control alone is not enough. The on-screen section title is not the proof. The home page must show the same language: its page language and the privacy-policy link (`Privacy policy` or `Політика конфіденційності`).
+- Q: Where is the language dropdown the check must use? → A: Preferences does not offer a usable language select. The user opens global preferences from Preferences, checks the box that enables the language dropdown, selects the language, and presses Save at the bottom of that page. The proof is still the Preferences heading and the home page after that save.
 
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Authorized user changes the interface language (Priority: P1)
 
-An authorized Wikipedia user opens Preferences, chooses a different interface language, and the application is then shown in that language.
+An authorized Wikipedia user opens Preferences, then global preferences, enables the language dropdown, chooses a different interface language, and the application is then shown in that language.
 
 **Why this priority**: This is the behavior the project exists to prove. Without it, the written case and the automated check have nothing to verify.
 
-**Independent Test**: Sign in with a valid Wikipedia account, change the interface language under Preferences, and confirm the interface uses the newly selected language.
+**Independent Test**: Sign in with a valid Wikipedia account, change the interface language on global preferences, and confirm the interface uses the newly selected language.
 
 **Acceptance Scenarios**:
 
-1. **Given** an authorized user is signed in and the interface is not Ukrainian, **When** the user opens Preferences, the User profile tab, and the Internationalization section, selects Ukrainian, and saves, **Then** the preferences page and the home page are displayed in Ukrainian.
-2. **Given** the interface is already Ukrainian, **When** the user selects English and saves, **Then** the preferences page and the home page are displayed in English.
+1. **Given** an authorized user is signed in and the interface is not Ukrainian, **When** the user opens Preferences, opens global preferences, checks the box that enables the language dropdown, selects Ukrainian, and presses Save at the bottom, **Then** the preferences page and the home page are displayed in Ukrainian.
+2. **Given** the interface is already Ukrainian, **When** the user checks that box if it is not already checked, selects English, and presses Save at the bottom, **Then** the preferences page and the home page are displayed in English.
 
 ---
 
@@ -68,7 +69,7 @@ A reader opens the project description and finds the test case that was automate
 - The account's current interface language is already Ukrainian. The check selects English so a real change still happens. If the interface is any other language, the check selects Ukrainian.
 - The local environment file is missing, or the username or password is empty or wrong. The run fails before it can claim the language changed, and a report is still left on the host if the check executed.
 - Preferences saves, but the interface remains in the previous language. The check fails.
-- The User profile tab or the Internationalization section cannot be reached. The check fails.
+- Global preferences, the checkbox that enables the language dropdown, or the Save button at the bottom cannot be reached. The check fails.
 - The container run is interrupted before the check executes. No success is reported. A report is required only when the check itself ran.
 - The operator opens the host report folder from an earlier run. The latest run replaces that report so the folder matches the run just finished.
 
@@ -77,7 +78,7 @@ A reader opens the project description and finds the test case that was automate
 ### Functional Requirements
 
 - **FR-001**: The project MUST include a written test case for an authorized user changing the Wikipedia interface language.
-- **FR-002**: That test case MUST state the precondition (an authorized user), the path (Preferences, User profile tab, Internationalization), the action (select a different interface display language and save), and the expected result (the application interface is shown in the selected language).
+- **FR-002**: That test case MUST state the precondition (an authorized user), the path (Preferences, then global preferences), the action (check the box that enables the language dropdown, select a different interface display language, and press Save at the bottom), and the expected result (the application interface is shown in the selected language).
 - **FR-003**: An automated check MUST perform that test case against the live Wikipedia web application.
 - **FR-004**: The automated check MUST sign in as the authorized user before it opens Preferences.
 - **FR-005**: The automated check MUST select Ukrainian when the interface is not already Ukrainian, and English when it is already Ukrainian. It MUST NOT select any other language.
@@ -91,7 +92,7 @@ A reader opens the project description and finds the test case that was automate
 ### Key Entities
 
 - **Authorized user**: A person with an existing Wikipedia account who can sign in with a username and password. The account is provided by the operator; the project does not create it.
-- **Interface language**: The display language of the Wikipedia application chrome, chosen under Preferences → User profile → Internationalization. The check uses only Ukrainian and English. It is distinct from the language of an article's content.
+- **Interface language**: The display language of the Wikipedia application chrome, chosen on global preferences after the checkbox that enables the language dropdown. The check uses only Ukrainian and English. It is distinct from the language of an article's content.
 - **Test case**: The written precondition, steps, and expected result for the language switch. The automated check and the project description both follow this case.
 - **Test report**: An HTML record of one container run, stored in a folder on the host computer.
 - **Credentials**: The account username and password, present only as environment variables loaded from the operator's local environment file.
@@ -113,7 +114,7 @@ A reader opens the project description and finds the test case that was automate
 - The only display languages in scope are Ukrainian and English, using the selection rule in FR-005.
 - Saving the preference is part of the user action. The check does not treat an unsaved selection as a successful change.
 - The check does not restore the previous language afterward. The account may be left in Ukrainian or English.
-- The project does not create, delete, or rename accounts, and it does not change any preference other than the interface display language.
+- The project does not create, delete, or rename accounts. Besides the interface language, the only extra control it uses is the checkbox that enables that language dropdown. It does not change any other preference.
 - Anonymous visitors, other Preferences tabs, and article-content language are out of scope.
 - "A container" means one isolated run started from the project, not a manually assembled machine. The HTML report format is the standard browser-viewable report produced by the automation tool, copied to a folder inside the project on the host.
 - The local environment file stays on the operator's machine and is not part of the shared project files.

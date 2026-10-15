@@ -31,4 +31,4 @@ The image build and the browser run happen inside the container. The command is 
 
 ## What the project description must let a reader do
 
-Using only `README.md`, a reader can find the written test case (precondition, Preferences → User profile → Internationalization, save, interface shown in the selected language), run the command above, and open `playwright-report/index.html`.
+Using only `README.md`, a reader can find the written test case (precondition, Preferences then global preferences, the checkbox that enables the language dropdown, Save at the bottom, interface shown in the selected language), run the command above, and open `playwright-report/index.html`.

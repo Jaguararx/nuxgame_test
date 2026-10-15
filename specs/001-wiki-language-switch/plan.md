@@ -8,7 +8,7 @@
 
 ## Summary
 
-An authorized Wikipedia user changes the interface language under Preferences → User profile → Internationalization, and the interface is then shown in Ukrainian or English. The project is one Playwright TypeScript check against English Wikipedia, run in the official Playwright container. After the check exits, the container copies Playwright's HTML report into `playwright-report/` on the host. Credentials are `WIKIPEDIA_USERNAME` and `WIKIPEDIA_PASSWORD` from a gitignored `.env`. `README.md` states the test case, the run command, and the report path.
+An authorized Wikipedia user changes the interface language on global preferences (the checkbox enables the language dropdown, then Save at the bottom), and the interface is then shown in Ukrainian or English. The project is one Playwright TypeScript check against English Wikipedia, run in the official Playwright container. After the check exits, the container copies Playwright's HTML report into `playwright-report/` on the host. Credentials are `WIKIPEDIA_USERNAME` and `WIKIPEDIA_PASSWORD` from a gitignored `.env`. `README.md` states the test case, the run command, and the report path.
 
 ## Technical Context
 
@@ -88,9 +88,9 @@ No constitution violations. Constitution 2.0.0 matches this test project: Playwr
 
 Details and rejected options are in [research.md](research.md).
 
-- Sign in at English Wikipedia `Special:UserLogin`, then open `Special:Preferences#mw-prefsection-personal`.
+- Sign in at English Wikipedia `Special:UserLogin`, open `Special:Preferences`, then follow `#mw-input-wpglobal-info` to `Special:GlobalPreferences`.
 - Read `html` `lang`. Target `uk` unless the current language is already `uk`, then target `en`.
-- Choose the language in the visible Internationalisation dropdown, then press the Save button pinned to the bottom of the preferences form. Pass only when `lang` and the preferences heading match the target (`Налаштування` or `Preferences`). A changed dropdown with the old heading fails.
+- Check `#mw-input-wplanguage-global` so the language dropdown enables, choose the language, then press the Save button pinned to the bottom. Open local Preferences again. Pass only when `lang` and the preferences heading match the target (`Налаштування` or `Preferences`). A changed dropdown with the old heading fails.
 - `playwright.config.ts` uses the HTML reporter with `open: 'never'` and output under `/tmp/playwright-report` when the container sets that folder. Local default may stay `playwright-report` for a non-container debug run; the supported path is the container.
 - `.env.example` lists the two variable names with empty values. `.gitignore` includes `.env`, `playwright-report/`, `test-results/`, and `node_modules/`.
 - `README.md` includes the written test case, `docker compose run --rm wiki-language`, and `playwright-report/index.html`.

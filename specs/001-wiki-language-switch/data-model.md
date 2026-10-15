@@ -42,8 +42,8 @@ The written case in the project description and the automated check. Both use th
 | Field | Value |
 | --- | --- |
 | Precondition | Authorized user, credentials only in the local environment file. |
-| Path | Preferences → User profile → Internationalization. |
-| Action | Select the target language and save. |
+| Path | Preferences, then global preferences. |
+| Action | Check the box that enables the language dropdown, select the target language, and press Save at the bottom. |
 | Expected result | The interface is shown in that language. |
 
 ## Test report

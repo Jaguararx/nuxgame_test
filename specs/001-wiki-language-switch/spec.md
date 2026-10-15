@@ -119,3 +119,4 @@ A reader opens the project description and finds the test case that was automate
 - "A container" means one isolated run started from the project, not a manually assembled machine. The HTML report format is the standard browser-viewable report produced by the automation tool, copied to a folder inside the project on the host.
 - The local environment file stays on the operator's machine and is not part of the shared project files.
 - A stable network path from the container to Wikipedia is available during the run.
+- Operators may clone and build on Windows or Linux. The container image MUST start even when the host Git client checked out shell scripts with Windows (CRLF) line endings.

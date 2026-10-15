@@ -11,6 +11,6 @@ COPY tests ./tests
 ENV PLAYWRIGHT_HTML_REPORT_DIR=/tmp/playwright-report
 ENV PLAYWRIGHT_OUTPUT_DIR=/tmp/test-results
 
-RUN chmod +x /app/entrypoint.sh
+RUN sed -i 's/\r$//' /app/entrypoint.sh && chmod +x /app/entrypoint.sh
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]

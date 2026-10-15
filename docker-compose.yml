@@ -1,0 +1,8 @@
+services:
+  wiki-language:
+    build: .
+    env_file:
+      - .env
+    ipc: host
+    volumes:
+      - ./playwright-report:/report

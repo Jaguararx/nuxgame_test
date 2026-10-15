@@ -32,10 +32,10 @@ Repository root, single Playwright project:
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create `package.json` and `package-lock.json` with `@playwright/test` pinned to 1.64.1, script `test` running `playwright test`, and script `lint` running `tsc --noEmit`
-- [ ] T002 [P] Create `tsconfig.json` with strict TypeScript that includes `playwright.config.ts` and `tests/**/*.ts`
-- [ ] T003 [P] Create `.gitignore` ignoring `.env`, `node_modules/`, `playwright-report/`, and `test-results/`
-- [ ] T004 [P] Create `.env.example` with empty `WIKIPEDIA_USERNAME=` and `WIKIPEDIA_PASSWORD=` and no account values
+- [X] T001 Create `package.json` and `package-lock.json` with `@playwright/test` pinned to 1.64.1, script `test` running `playwright test`, and script `lint` running `tsc --noEmit`
+- [X] T002 [P] Create `tsconfig.json` with strict TypeScript that includes `playwright.config.ts` and `tests/**/*.ts`
+- [X] T003 [P] Create `.gitignore` ignoring `.env`, `node_modules/`, `playwright-report/`, and `test-results/`
+- [X] T004 [P] Create `.env.example` with empty `WIKIPEDIA_USERNAME=` and `WIKIPEDIA_PASSWORD=` and no account values
 
 ---
 
@@ -45,7 +45,7 @@ Repository root, single Playwright project:
 
 **Critical**: No user story work can begin until this phase is complete
 
-- [ ] T005 Create `playwright.config.ts` for Chromium only, `baseURL` `https://en.wikipedia.org`, test timeout 90000, navigation timeout 30000, HTML reporter with `open: 'never'`, and `outputFolder` from `PLAYWRIGHT_HTML_REPORT_DIR` defaulting to `playwright-report`
+- [X] T005 Create `playwright.config.ts` for Chromium only, `baseURL` `https://en.wikipedia.org`, test timeout 90000, navigation timeout 30000, HTML reporter with `open: 'never'`, and `outputFolder` from `PLAYWRIGHT_HTML_REPORT_DIR` defaulting to `playwright-report`
 
 **Checkpoint**: Foundation ready — user story implementation can now begin
 
@@ -59,8 +59,8 @@ Repository root, single Playwright project:
 
 ### Implementation for User Story 1
 
-- [ ] T006 [US1] Implement `tests/language-switch.spec.ts` so it reads credentials only from `process.env`, fails when `WIKIPEDIA_USERNAME` or `WIKIPEDIA_PASSWORD` is missing or empty, signs in at `Special:UserLogin` with no second-factor step, opens `Special:Preferences#mw-prefsection-personal`, reads the current language from the page `lang` attribute, selects `uk` when current is not `uk` and `en` when current is `uk` via `#mw-input-wplanguage`, saves the preference, and passes only when `lang` and the preferences heading match the target (`Налаштування` for `uk`, `Preferences` for `en`). A matching select with the previous heading fails. A wrong password, a failed sign-in, or a missing preferences language control fails the check and does not pass. Do not assert the visible section title. Do not restore the previous language. Do not use `uselang`.
-- [ ] T007 [US1] Run `npm run lint` and fix `tests/language-switch.spec.ts` and `playwright.config.ts` until `tsc --noEmit` passes
+- [X] T006 [US1] Implement `tests/language-switch.spec.ts` so it reads credentials only from `process.env`, fails when `WIKIPEDIA_USERNAME` or `WIKIPEDIA_PASSWORD` is missing or empty, signs in at `Special:UserLogin` with no second-factor step, opens `Special:Preferences#mw-prefsection-personal`, reads the current language from the page `lang` attribute, selects `uk` when current is not `uk` and `en` when current is `uk` via `#mw-input-wplanguage`, saves the preference, and passes only when `lang` and the preferences heading match the target (`Налаштування` for `uk`, `Preferences` for `en`). A matching select with the previous heading fails. A wrong password, a failed sign-in, or a missing preferences language control fails the check and does not pass. Do not assert the visible section title. Do not restore the previous language. Do not use `uselang`.
+- [X] T007 [US1] Run `npm run lint` and fix `tests/language-switch.spec.ts` and `playwright.config.ts` until `tsc --noEmit` passes
 
 **Checkpoint**: User Story 1 is testable with `npx playwright test` before the container exists
 
@@ -74,9 +74,9 @@ Repository root, single Playwright project:
 
 ### Implementation for User Story 2
 
-- [ ] T008 [P] [US2] Create `entrypoint.sh` that runs `npx playwright test`, keeps the test exit code, clears the contents of `/report` without removing the mount, copies `/tmp/playwright-report` to `/report` when that directory exists, and exits with the test exit code on both pass and fail
-- [ ] T009 [P] [US2] Create `docker-compose.yml` with service `wiki-language`, `env_file: .env`, `ipc: host`, and volume `./playwright-report:/report`, and with no credential values
-- [ ] T010 [US2] Create `Dockerfile` from `mcr.microsoft.com/playwright:v1.64.1-noble` after confirming that tag exists (if Noble is unpublished for 1.64.1, use the Ubuntu tag Microsoft published for 1.64.1), install dependencies with `npm ci`, set `PLAYWRIGHT_HTML_REPORT_DIR=/tmp/playwright-report`, and start `entrypoint.sh`
+- [X] T008 [P] [US2] Create `entrypoint.sh` that runs `npx playwright test`, keeps the test exit code, clears the contents of `/report` without removing the mount, copies `/tmp/playwright-report` to `/report` when that directory exists, and exits with the test exit code on both pass and fail
+- [X] T009 [P] [US2] Create `docker-compose.yml` with service `wiki-language`, `env_file: .env`, `ipc: host`, and volume `./playwright-report:/report`, and with no credential values
+- [X] T010 [US2] Create `Dockerfile` from `mcr.microsoft.com/playwright:v1.64.1-noble` after confirming that tag exists (if Noble is unpublished for 1.64.1, use the Ubuntu tag Microsoft published for 1.64.1), install dependencies with `npm ci`, set `PLAYWRIGHT_HTML_REPORT_DIR=/tmp/playwright-report`, and start `entrypoint.sh`
 
 **Checkpoint**: User Stories 1 and 2 both work. The supported run is the container command in `specs/001-wiki-language-switch/contracts/operator-run.md`.
 
@@ -90,7 +90,7 @@ Repository root, single Playwright project:
 
 ### Implementation for User Story 3
 
-- [ ] T011 [US3] Write `README.md` with the test case (precondition: authorized user, credentials only in the local environment file; path: Preferences → User profile → Internationalization; action: select the target language and save; expected result: the interface is shown in that language), the command `docker compose run --rm wiki-language`, and the host report `playwright-report/index.html`. Keep the word Internationalization in that path. The on-screen section title is not part of the written case. Name `WIKIPEDIA_USERNAME` and `WIKIPEDIA_PASSWORD` as empty values copied from `.env.example`. Do not write any account username or password.
+- [X] T011 [US3] Write `README.md` with the test case (precondition: authorized user, credentials only in the local environment file; path: Preferences → User profile → Internationalization; action: select the target language and save; expected result: the interface is shown in that language), the command `docker compose run --rm wiki-language`, and the host report `playwright-report/index.html`. Keep the word Internationalization in that path. The on-screen section title is not part of the written case. Name `WIKIPEDIA_USERNAME` and `WIKIPEDIA_PASSWORD` as empty values copied from `.env.example`. Do not write any account username or password.
 
 **Checkpoint**: All user stories are independently functional
 
@@ -100,8 +100,8 @@ Repository root, single Playwright project:
 
 **Purpose**: Secret scan and the quickstart run
 
-- [ ] T012 Search `README.md`, `.env.example`, `tests/language-switch.spec.ts`, `playwright.config.ts`, `Dockerfile`, `docker-compose.yml`, and `entrypoint.sh` and remove any real username or password so only `process.env` names remain
-- [ ] T013 Run the validation in `specs/001-wiki-language-switch/quickstart.md` with a local `.env` and confirm `playwright-report/index.html` is on the host
+- [X] T012 Search `README.md`, `.env.example`, `tests/language-switch.spec.ts`, `playwright.config.ts`, `Dockerfile`, `docker-compose.yml`, and `entrypoint.sh` and remove any real username or password so only `process.env` names remain
+- [X] T013 Run the validation in `specs/001-wiki-language-switch/quickstart.md` with a local `.env` and confirm `playwright-report/index.html` is on the host
 
 ---
 

@@ -31,6 +31,12 @@ docker compose run --rm wiki-language
 
 Docker and a network path to English Wikipedia are required. The command needs no further input. It runs the tests in this folder. Rebuild the image with `docker compose build` only after `package.json` changes.
 
+## Rebuild after changes
+
+```text
+docker compose build --no-cache
+```
+
 ## Report
 
 After the run, open `playwright-report/index.html` on this computer. The report is not left only inside the container. A passed run and a failed run both replace that file when the check itself ran. A failed run includes a screenshot of the page.

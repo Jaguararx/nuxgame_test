@@ -13,7 +13,7 @@
 ### Session 2026-10-15
 
 - Q: Which two interface languages should the check switch between? → A: Ukrainian and English. Switch to Ukrainian unless the account is already in Ukrainian, then switch to English.
-- Q: What proves the interface language changed? → A: The preferences heading (`Налаштування` or `Preferences`) and the page language. The language control alone is not enough. The on-screen section title is not the proof.
+- Q: What proves the interface language changed? → A: The preferences heading (`Налаштування` or `Preferences`) and the page language. The language control alone is not enough. The on-screen section title is not the proof. The home page must show the same language: its page language and the privacy-policy link (`Privacy policy` or `Політика конфіденційності`).
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -27,8 +27,8 @@ An authorized Wikipedia user opens Preferences, chooses a different interface la
 
 **Acceptance Scenarios**:
 
-1. **Given** an authorized user is signed in and the interface is not Ukrainian, **When** the user opens Preferences, the User profile tab, and the Internationalization section, selects Ukrainian, and saves, **Then** the application interface is displayed in Ukrainian.
-2. **Given** the interface is already Ukrainian, **When** the user selects English and saves, **Then** the application interface is displayed in English.
+1. **Given** an authorized user is signed in and the interface is not Ukrainian, **When** the user opens Preferences, the User profile tab, and the Internationalization section, selects Ukrainian, and saves, **Then** the preferences page and the home page are displayed in Ukrainian.
+2. **Given** the interface is already Ukrainian, **When** the user selects English and saves, **Then** the preferences page and the home page are displayed in English.
 
 ---
 
@@ -81,7 +81,7 @@ A reader opens the project description and finds the test case that was automate
 - **FR-003**: An automated check MUST perform that test case against the live Wikipedia web application.
 - **FR-004**: The automated check MUST sign in as the authorized user before it opens Preferences.
 - **FR-005**: The automated check MUST select Ukrainian when the interface is not already Ukrainian, and English when it is already Ukrainian. It MUST NOT select any other language.
-- **FR-006**: The automated check MUST pass only when the preferences heading is `Налаштування` after Ukrainian is selected, or `Preferences` after English is selected, and the page language matches that choice. A change that updates only the language control, while that heading stays in the previous language, MUST fail. The visible section title is not the proof.
+- **FR-006**: The automated check MUST pass only when the preferences heading is `Налаштування` after Ukrainian is selected, or `Preferences` after English is selected, and the page language matches that choice. A change that updates only the language control, while that heading stays in the previous language, MUST fail. The visible section title is not the proof. The check MUST then open the home page and pass only when that page's language and its privacy-policy link (`Privacy policy` or `Політика конфіденційності`) match the same choice.
 - **FR-007**: The operator MUST be able to run the automated check inside a container using the steps in the project description.
 - **FR-008**: After the check has run in the container, the HTML report MUST be present in a folder on the host computer. The report MUST NOT remain only inside the container.
 - **FR-009**: The host report folder MUST be updated for both a passed run and a failed run, as long as the check executed.
@@ -100,7 +100,7 @@ A reader opens the project description and finds the test case that was automate
 
 ### Measurable Outcomes
 
-- **SC-001**: In a single signed-in session, after the user saves a different interface language, the preferences heading and the page language match that language before the session ends.
+- **SC-001**: In a single signed-in session, after the user saves a different interface language, the preferences heading, the home-page privacy-policy link, and the page language on both pages match that language before the session ends.
 - **SC-002**: With a valid local environment file, one documented container run finishes the language-switch case with no further input from the operator.
 - **SC-003**: After that run, the operator can open an HTML report from a folder on the host computer without opening the container. The report matches the run that just finished.
 - **SC-004**: No shared project file contains the account username or password. Both values are read from the environment at run time.

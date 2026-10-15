@@ -1,36 +1,40 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 
-const username = process.env.WIKIPEDIA_USERNAME ?? "";
-const password = process.env.WIKIPEDIA_PASSWORD ?? "";
+import { TestData } from "./data/test-data";
+import { HomePage } from "./pages/home.page";
+import { LoginPage } from "./pages/login.page";
+import { PreferencesPage } from "./pages/preferences.page";
 
-test("authorized user changes the interface language", async ({ page }) => {
-  expect(username, "WIKIPEDIA_USERNAME is required").not.toBe("");
-  expect(password, "WIKIPEDIA_PASSWORD is required").not.toBe("");
+let context: BrowserContext;
+let page: Page;
 
-  await page.goto("/w/index.php?title=Special:UserLogin");
-  await page.locator("#wpName1").fill(username);
-  await page.locator("#wpPassword1").fill(password);
-  await page.locator("#wpLoginAttempt").click();
+test.beforeAll(async ({ browser }) => {
+  expect(TestData.username, TestData.usernameRequired).not.toBe("");
+  expect(TestData.password, TestData.passwordRequired).not.toBe("");
 
-  const loginError = page.locator(".mw-message-box-error, .errorbox");
-  if ((await loginError.count()) > 0) {
-    throw new Error(
-      `Sign-in failed: ${(await loginError.first().innerText()).trim()}`,
-    );
-  }
-  await expect(page.locator("#wpName1")).toHaveCount(0);
+  context = await browser.newContext();
+  page = await context.newPage();
 
-  await page.goto("/wiki/Special:Preferences#mw-prefsection-personal");
-  const language = page.locator("#mw-input-wplanguage");
-  await expect(language, "Preferences language control is missing").toBeVisible();
+  const loginPage = new LoginPage(page);
+  await loginPage.open();
+  await loginPage.signIn(TestData.username, TestData.password);
+});
 
-  const current = await page.locator("html").getAttribute("lang");
-  const target = current === "uk" ? "en" : "uk";
-  const heading = target === "uk" ? "Налаштування" : "Preferences";
+test.afterAll(async () => {
+  await context?.close();
+});
 
-  await language.selectOption(target);
-  await page.locator("#prefcontrol").click();
+test("authorized user changes the interface language", async () => {
+  const preferencesPage = new PreferencesPage(page);
+  await preferencesPage.open();
+  await preferencesPage.expectLanguageControl();
 
-  await expect(page.locator("html")).toHaveAttribute("lang", target);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
+  const target = TestData.targetLanguage(await preferencesPage.currentLanguage());
+  await preferencesPage.selectLanguage(target);
+  await preferencesPage.save();
+  await preferencesPage.expectInterface(target);
+
+  const homePage = new HomePage(page);
+  await homePage.open();
+  await homePage.expectInterface(target);
 });

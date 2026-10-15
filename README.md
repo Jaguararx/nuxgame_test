@@ -31,4 +31,4 @@ Docker and a network path to English Wikipedia are required. The command needs n
 
 ## Report
 
-After the run, open `playwright-report/index.html` on this computer. The report is not left only inside the container. A passed run and a failed run both replace that file when the check itself ran.
+After the run, open `playwright-report/index.html` on this computer. The report is not left only inside the container. A passed run and a failed run both replace that file when the check itself ran. A failed run includes a screenshot of the page.

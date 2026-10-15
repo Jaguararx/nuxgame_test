@@ -8,6 +8,7 @@ export default defineConfig({
   use: {
     baseURL: "https://en.wikipedia.org",
     navigationTimeout: 30_000,
+    screenshot: "only-on-failure",
   },
   projects: [
     {

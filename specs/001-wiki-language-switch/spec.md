@@ -44,7 +44,7 @@ An operator starts the automated check inside a container. When the run finishes
 
 1. **Given** credentials are available to the run and the container can reach Wikipedia, **When** the operator starts the documented container run, **Then** the automated check performs the language-switch case with no further manual steps.
 2. **Given** the container run has finished (pass or fail), **When** the operator looks in the documented folder on the host, **Then** an HTML report of that run is present and can be opened in a browser.
-3. **Given** the sign-in or the language change fails, **When** the container run finishes, **Then** the report on the host shows the failure and does not show a passed result.
+3. **Given** the sign-in or the language change fails, **When** the container run finishes, **Then** the report on the host shows the failure, includes a screenshot of the page, and does not show a passed result.
 
 ---
 
@@ -84,7 +84,7 @@ A reader opens the project description and finds the test case that was automate
 - **FR-006**: The automated check MUST pass only when the preferences heading is `Налаштування` after Ukrainian is selected, or `Preferences` after English is selected, and the page language matches that choice. A change that updates only the language control, while that heading stays in the previous language, MUST fail. The visible section title is not the proof. The check MUST then open the home page and pass only when that page's language and its privacy-policy link (`Privacy policy` or `Політика конфіденційності`) match the same choice.
 - **FR-007**: The operator MUST be able to run the automated check inside a container using the steps in the project description.
 - **FR-008**: After the check has run in the container, the HTML report MUST be present in a folder on the host computer. The report MUST NOT remain only inside the container.
-- **FR-009**: The host report folder MUST be updated for both a passed run and a failed run, as long as the check executed.
+- **FR-009**: The host report folder MUST be updated for both a passed run and a failed run, as long as the check executed. A failed run MUST include a screenshot of the page in that report. A passed run does not need a screenshot.
 - **FR-010**: The username and password MUST be supplied only as environment variables from a local environment file. They MUST NOT appear in source files, the project description, or any other file that is part of the shared project.
 - **FR-011**: The project description MUST include the automated test case, how to run the check, and where to find the HTML report on the host.
 

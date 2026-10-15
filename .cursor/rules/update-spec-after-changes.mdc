@@ -1,0 +1,27 @@
+---
+description: Update the feature spec after every product or behavior change
+alwaysApply: true
+---
+
+# Update spec after changes
+
+After **each** product, UX, or behavior change (new feature, requirement, acceptance rule, or user-visible behavior), **update the spec in the same turn** before finishing. Do not leave `spec.md` stale.
+
+## Spec location
+
+- Active spec: `specs/001-wiki-language-switch/spec.md`
+- Related quality notes: `specs/001-wiki-language-switch/checklists/requirements.md`
+
+## What to update
+
+Keep the spec **testable and stakeholder-facing** (what/why, not stack details unless the spec already requires them):
+
+- **Clarifications**: add a dated Q→A when the user decided something new
+- **User stories / acceptance scenarios**: match the new visitor or operator flow
+- **Functional requirements**: add or revise an `FR-*` so the change is testable
+- **Success criteria / edge cases / assumptions**: only if the change affects them
+
+## Do not skip
+
+- A code-only change that alters public or admin behavior still needs a spec update
+- Pure refactors, formatting, or internal-only fixes with no behavior change do **not** need a spec update

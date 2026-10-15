@@ -1,0 +1,25 @@
+---
+description: Run lint after TypeScript adds or edits and fix failures before finishing
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Lint after TypeScript changes
+
+After you add or change any `.ts` or `.tsx` file, run lint on those files before finishing:
+
+```bash
+npx next lint --file <changed-file.ts>
+```
+
+If several files added and/or changed, pass each with `--file`. Use `npm run lint` when the change is broad (same check as Vercel `next build`).
+
+If lint fails, fix the reported issues and re-run until it passes. Do not leave a red lint that would fail deploy.
+
+```ts
+// ❌ BAD — @typescript-eslint/prefer-nullish-coalescing
+Boolean(env.BLOB_READ_WRITE_TOKEN || process.env.VERCEL)
+
+// ✅ GOOD
+Boolean(env.BLOB_READ_WRITE_TOKEN ?? process.env.VERCEL)
+```

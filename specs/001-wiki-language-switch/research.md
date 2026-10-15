@@ -12,6 +12,12 @@
 
 **Alternatives considered**: A plain Node image plus `playwright install --with-deps` (slower builds, easier to mismatch browsers and the npm package).
 
+## Decision: Bind-mount the tests for `docker compose run`
+
+**Rationale**: The image copies `tests/` at build time, and `docker compose run --rm wiki-language` does not rebuild. A later edit would otherwise run the old check. Compose bind-mounts `tests/`, `playwright.config.ts`, and `tsconfig.json` over `/app`, so that command uses the current files. Rebuild with `docker compose build` only when `package.json` or the image dependencies change.
+
+**Alternatives considered**: Requiring `--build` on every run (slower, and the documented command would no longer match). Leaving the tests only inside the image (the run the operator just started stays stale).
+
 ## Decision: Copy the HTML report to a host folder after the run
 
 **Rationale**: Playwright's built-in HTML reporter writes `playwright-report/index.html` and replaces that folder on each run. Inside a container those files disappear when the container stops, and the reporter deletes its output folder before writing. Deleting a bind-mounted directory is unreliable. The reporter therefore writes to `/tmp/playwright-report` with `open: 'never'`. The container entrypoint then copies that folder to `/report`, which is the host directory `playwright-report/`, and exits with the test's status code. The copy runs after a passed or failed test. `ipc: host` is set so Chromium is not starved of shared memory.

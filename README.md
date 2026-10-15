@@ -28,7 +28,7 @@ Automated check that an authorized Wikipedia user can change the interface langu
 docker compose run --rm wiki-language
 ```
 
-Docker and a network path to English Wikipedia are required. The command needs no further input.
+Docker and a network path to English Wikipedia are required. The command needs no further input. It runs the tests in this folder. Rebuild the image with `docker compose build` only after `package.json` changes.
 
 ## Report
 

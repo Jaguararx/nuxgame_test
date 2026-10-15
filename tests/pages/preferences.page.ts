@@ -51,11 +51,16 @@ export class PreferencesPage {
   }
 
   async expectLanguageControl(): Promise<void> {
+    await expect(this.page).toHaveURL(/Special:GlobalPreferences/);
     await expect(
       this.globalLanguageCheckbox,
       TestData.languageControlMissing,
     ).toBeVisible();
+    if (!(await this.globalLanguageCheckbox.isChecked())) {
+      await this.globalLanguageCheckbox.check();
+    }
     await expect(this.languageCombobox, TestData.languageControlMissing).toBeVisible();
+    await expect(this.languageCombobox).toBeEnabled();
   }
 
   async currentLanguage(): Promise<string | null> {

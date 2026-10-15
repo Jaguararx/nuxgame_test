@@ -39,7 +39,7 @@ An authorized Wikipedia user changes the interface language under Preferences â†
 | I. Spec tracks behavior | Pass. This plan does not change the spec's behavior. |
 | II. Schema migrations | Pass. No tables or columns. |
 | III. Queries load used columns | Pass. No database queries. |
-| IV. TypeScript must pass lint | Pass with the exception below. `npm run lint` is `tsc --noEmit`. |
+| IV. TypeScript must pass lint | Pass. `npm run lint` is `tsc --noEmit`. |
 | V. Justified complexity | Pass. One test project. The container is required by the spec. |
 
 ### Post-design re-check
@@ -82,10 +82,7 @@ playwright-report/        # host output, gitignored, created by the run
 
 ## Complexity Tracking
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-| --- | --- | --- |
-| Constitution technical constraint says application code is TypeScript on Next.js with Drizzle | The requester asked for a Playwright test, a container run, and an HTML report. There is no product UI or database in this feature. | A Next.js app would be a second application that the spec does not ask for. |
-| Lint command is `tsc --noEmit` instead of `next lint` | `next lint` requires a Next.js app that this feature does not have. | Adding Next.js only to host the linter fails Principle V. |
+No constitution violations. Constitution 2.0.0 matches this test project: Playwright, no Next.js application, no database, and `npm run lint` as `tsc --noEmit`.
 
 ## Implementation notes
 

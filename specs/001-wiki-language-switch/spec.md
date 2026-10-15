@@ -13,6 +13,7 @@
 ### Session 2026-10-15
 
 - Q: Which two interface languages should the check switch between? → A: Ukrainian and English. Switch to Ukrainian unless the account is already in Ukrainian, then switch to English.
+- Q: What proves the interface language changed? → A: The preferences heading (`Налаштування` or `Preferences`) and the page language. The language control alone is not enough. The on-screen section title is not the proof.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -80,7 +81,7 @@ A reader opens the project description and finds the test case that was automate
 - **FR-003**: An automated check MUST perform that test case against the live Wikipedia web application.
 - **FR-004**: The automated check MUST sign in as the authorized user before it opens Preferences.
 - **FR-005**: The automated check MUST select Ukrainian when the interface is not already Ukrainian, and English when it is already Ukrainian. It MUST NOT select any other language.
-- **FR-006**: The automated check MUST pass only when the application interface is displayed in the language the user selected. A change that updates only the language control, while the rest of the interface stays in the previous language, MUST fail.
+- **FR-006**: The automated check MUST pass only when the preferences heading is `Налаштування` after Ukrainian is selected, or `Preferences` after English is selected, and the page language matches that choice. A change that updates only the language control, while that heading stays in the previous language, MUST fail. The visible section title is not the proof.
 - **FR-007**: The operator MUST be able to run the automated check inside a container using the steps in the project description.
 - **FR-008**: After the check has run in the container, the HTML report MUST be present in a folder on the host computer. The report MUST NOT remain only inside the container.
 - **FR-009**: The host report folder MUST be updated for both a passed run and a failed run, as long as the check executed.
@@ -99,7 +100,7 @@ A reader opens the project description and finds the test case that was automate
 
 ### Measurable Outcomes
 
-- **SC-001**: In a single signed-in session, after the user saves a different interface language, the interface labels are in that language before the session ends.
+- **SC-001**: In a single signed-in session, after the user saves a different interface language, the preferences heading and the page language match that language before the session ends.
 - **SC-002**: With a valid local environment file, one documented container run finishes the language-switch case with no further input from the operator.
 - **SC-003**: After that run, the operator can open an HTML report from a folder on the host computer without opening the container. The report matches the run that just finished.
 - **SC-004**: No shared project file contains the account username or password. Both values are read from the environment at run time.

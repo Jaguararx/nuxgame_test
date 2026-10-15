@@ -59,7 +59,7 @@ Repository root, single Playwright project:
 
 ### Implementation for User Story 1
 
-- [ ] T006 [US1] Implement `tests/language-switch.spec.ts` so it reads credentials only from `process.env`, fails when `WIKIPEDIA_USERNAME` or `WIKIPEDIA_PASSWORD` is missing or empty, signs in at `Special:UserLogin` with no second-factor step, opens `Special:Preferences#mw-prefsection-personal`, reads the current language from the page `lang` attribute, selects `uk` when current is not `uk` and `en` when current is `uk` via `#mw-input-wplanguage`, saves the preference, and passes only when `lang` and the preferences heading match the target (`Налаштування` for `uk`, `Preferences` for `en`). A matching select with the previous heading fails. Do not restore the previous language. Do not use `uselang`.
+- [ ] T006 [US1] Implement `tests/language-switch.spec.ts` so it reads credentials only from `process.env`, fails when `WIKIPEDIA_USERNAME` or `WIKIPEDIA_PASSWORD` is missing or empty, signs in at `Special:UserLogin` with no second-factor step, opens `Special:Preferences#mw-prefsection-personal`, reads the current language from the page `lang` attribute, selects `uk` when current is not `uk` and `en` when current is `uk` via `#mw-input-wplanguage`, saves the preference, and passes only when `lang` and the preferences heading match the target (`Налаштування` for `uk`, `Preferences` for `en`). A matching select with the previous heading fails. A wrong password, a failed sign-in, or a missing preferences language control fails the check and does not pass. Do not assert the visible section title. Do not restore the previous language. Do not use `uselang`.
 - [ ] T007 [US1] Run `npm run lint` and fix `tests/language-switch.spec.ts` and `playwright.config.ts` until `tsc --noEmit` passes
 
 **Checkpoint**: User Story 1 is testable with `npx playwright test` before the container exists
@@ -90,7 +90,7 @@ Repository root, single Playwright project:
 
 ### Implementation for User Story 3
 
-- [ ] T011 [US3] Write `README.md` with the test case (precondition: authorized user, credentials only in the local environment file; path: Preferences → User profile → Internationalization; action: select the target language and save; expected result: the interface is shown in that language), the command `docker compose run --rm wiki-language`, and the host report `playwright-report/index.html`. Name `WIKIPEDIA_USERNAME` and `WIKIPEDIA_PASSWORD` as empty values copied from `.env.example`. Do not write any account username or password.
+- [ ] T011 [US3] Write `README.md` with the test case (precondition: authorized user, credentials only in the local environment file; path: Preferences → User profile → Internationalization; action: select the target language and save; expected result: the interface is shown in that language), the command `docker compose run --rm wiki-language`, and the host report `playwright-report/index.html`. Keep the word Internationalization in that path. The on-screen section title is not part of the written case. Name `WIKIPEDIA_USERNAME` and `WIKIPEDIA_PASSWORD` as empty values copied from `.env.example`. Do not write any account username or password.
 
 **Checkpoint**: All user stories are independently functional
 

@@ -90,7 +90,7 @@ Details and rejected options are in [research.md](research.md).
 
 - Sign in at English Wikipedia `Special:UserLogin`, then open `Special:Preferences#mw-prefsection-personal`.
 - Read `html` `lang`. Target `uk` unless the current language is already `uk`, then target `en`.
-- Set `#mw-input-wplanguage` and save. Pass only when `lang` and the preferences heading match the target (`Налаштування` or `Preferences`). A changed select with the old heading fails.
+- Choose the language in the visible Internationalisation dropdown, then press the Save button pinned to the bottom of the preferences form. Pass only when `lang` and the preferences heading match the target (`Налаштування` or `Preferences`). A changed dropdown with the old heading fails.
 - `playwright.config.ts` uses the HTML reporter with `open: 'never'` and output under `/tmp/playwright-report` when the container sets that folder. Local default may stay `playwright-report` for a non-container debug run; the supported path is the container.
 - `.env.example` lists the two variable names with empty values. `.gitignore` includes `.env`, `playwright-report/`, `test-results/`, and `node_modules/`.
 - `README.md` includes the written test case, `docker compose run --rm wiki-language`, and `playwright-report/index.html`.

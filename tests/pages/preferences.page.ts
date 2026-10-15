@@ -2,15 +2,32 @@ import { expect, type Page } from "@playwright/test";
 
 import { TestData } from "../data/test-data";
 
+const languageOptionLabels = {
+  uk: "uk · українська",
+  en: "en · English",
+} as const;
+
 export class PreferencesPage {
   constructor(private readonly page: Page) {}
 
+  private get languageField() {
+    return this.page.locator(".mw-htmlform-field-HTMLSelectLanguageField");
+  }
+
+  /** Native select is kept for the submitted value. The page hides it. */
   private get languageSelect() {
     return this.page.locator("#mw-input-wplanguage");
   }
 
+  private get languageCombobox() {
+    return this.languageField.locator('input[role="combobox"]');
+  }
+
+  /** Sticky bar pinned to the bottom of the preferences form. */
   private get saveButton() {
-    return this.page.locator("#prefcontrol");
+    return this.page.locator(
+      "#mw-prefs-form .mw-htmlform-submit-buttons button[type='submit']",
+    );
   }
 
   private get documentElement() {
@@ -26,7 +43,7 @@ export class PreferencesPage {
   }
 
   async expectLanguageControl(): Promise<void> {
-    await expect(this.languageSelect, TestData.languageControlMissing).toBeVisible();
+    await expect(this.languageCombobox, TestData.languageControlMissing).toBeVisible();
   }
 
   async currentLanguage(): Promise<string | null> {
@@ -34,10 +51,15 @@ export class PreferencesPage {
   }
 
   async selectLanguage(language: "uk" | "en"): Promise<void> {
-    await this.languageSelect.selectOption(language);
+    await this.languageCombobox.click();
+    await this.languageField
+      .getByRole("option", { name: languageOptionLabels[language], exact: true })
+      .click();
+    await expect(this.languageSelect).toHaveValue(language);
   }
 
   async save(): Promise<void> {
+    await expect(this.saveButton).toBeEnabled();
     await this.saveButton.click();
   }
 

@@ -26,13 +26,13 @@
 
 ## Decision: English Wikipedia preferences, saved language, not `uselang`
 
-**Rationale**: The application under test is `https://en.wikipedia.org`. Interface language is the user preference under Preferences → User profile → Internationalisation (MediaWiki's English label uses the British spelling). The stable control is the language select `#mw-input-wplanguage` (`name="wplanguage"`) in `#mw-prefsection-personal`. Option values are `uk` (Ukrainian) and `en` (English). The check saves with the preferences submit control and waits for the page to reload. A `uselang` query parameter would change the view without saving the preference, so it MUST NOT be used as the action under test.
+**Rationale**: The application under test is `https://en.wikipedia.org`. Interface language is the user preference under Preferences → User profile → Internationalisation (MediaWiki's English label uses the British spelling). The visible control is the language dropdown in `.mw-htmlform-field-HTMLSelectLanguageField` (`input[role="combobox"]`). The native `#mw-input-wplanguage` select stays in the form but is hidden, so a visibility check on that select fails. Option values are `uk` (shown as `uk · українська`) and `en` (shown as `en · English`). After the dropdown changes, the check presses the Save button in the sticky bar at the bottom of the preferences form (`#mw-prefs-form .mw-htmlform-submit-buttons button[type="submit"]`) and waits for the page to reload. A `uselang` query parameter would change the view without saving the preference, so it MUST NOT be used as the action under test.
 
 **Alternatives considered**: The Universal Language Selector dialog (extra UI, not the preferences select the scenario names). Another language edition of Wikipedia (out of scope).
 
 ## Decision: What proves the interface changed
 
-**Rationale**: The current language is `document.documentElement.lang`. If it is `uk`, the target is English (`en`); otherwise the target is Ukrainian (`uk`), including when the account is already in some third language. After save, the check passes only when both are true: `html` `lang` equals the target code, and the preferences page heading is the target language's word for that page (`Preferences` in English, `Налаштування` in Ukrainian). The selected option in `#mw-input-wplanguage` may be checked as well, but a matching select with the old heading MUST fail.
+**Rationale**: The current language is `document.documentElement.lang`. If it is `uk`, the target is English (`en`); otherwise the target is Ukrainian (`uk`), including when the account is already in some third language. After save, the check passes only when both are true: `html` `lang` equals the target code, and the preferences page heading is the target language's word for that page (`Preferences` in English, `Налаштування` in Ukrainian). The submitted value in the hidden `#mw-input-wplanguage` select may be checked as well, but a matching value with the old heading MUST fail.
 
 **Alternatives considered**: Asserting only the select (rejected by the spec). Asserting article text (article language is out of scope and usually does not change).
 

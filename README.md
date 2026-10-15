@@ -22,7 +22,8 @@ Automated check that an authorized Wikipedia user can change the interface langu
 
 1. Copy `.env.example` to `.env`.
 2. Set `WIKIPEDIA_USERNAME` and `WIKIPEDIA_PASSWORD`. Leave them empty in `.env.example`. Do not commit `.env`.
-3. From the repository root:
+3. Make sure the Docker Desktop is running.
+4. From the repository root:
 
 ```text
 docker compose run --rm wiki-language
